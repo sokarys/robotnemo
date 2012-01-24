@@ -9,9 +9,9 @@ from random import randint
 
 
 
-def alea (min , max) :
-
-    return randint(min=1, max=100)
+def alea (min=1 , max=100) :
+    
+    return randint(min, max)
 
 n_entre, n_mystere = 0, alea(min, max) 
 
