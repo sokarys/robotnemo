@@ -6,6 +6,9 @@ Created on 12 janv. 2012
 from gui.RobotGUI import RobotGUI
 import wx
 from gui.Robot import Robot
+from wxTerminal import TerminalFrame
+import serial
+import threading
 
 class RobotGUIManager(RobotGUI):
     '''
@@ -23,7 +26,7 @@ class RobotGUIManager(RobotGUI):
     def OnConnect(self, event):
         self.__mConnected = event.IsChecked()
         if self.__mConnected:
-            self.__mRobot.Connect()
+                self._mTerminalFrame = TerminalFrame(self._mDrawPanel)
         else:
             self.__mRobot.Disconnect()
         
@@ -45,6 +48,9 @@ class RobotGUIManager(RobotGUI):
             if key == 68: #D
                 self._mDrawPanel.SetX(self._mDrawPanel.GetX()+1)
                 print "right"
+    
+    def GetDrawPanel(self):
+        return self._mDrawPanel
                 
     def OnMotion(self, event):
         if self.__mConnected:
