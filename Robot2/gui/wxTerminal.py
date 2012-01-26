@@ -122,15 +122,16 @@ class TerminalSettingsDialog(wx.Dialog):
 class TerminalFrame(wx.Frame):
     """Simple terminal program for wxPython"""
     
-    def __init__(self, *args, **kwds):
+    def __init__(self, inDrawPanel):
+        self.__mDrawPanel = inDrawPanel
         self.serial = serial.Serial()
         self.serial.timeout = 0.5   #make sure that the alive event can be checked from time to time
         self.settings = TerminalSetup() #placeholder for the settings
         self.thread = None
         self.alive = threading.Event()               
         # begin wxGlade: TerminalFrame.__init__
-        kwds["style"] = wx.DEFAULT_FRAME_STYLE
-        wx.Frame.__init__(self, *args, **kwds)
+        #kwds["style"] = wx.DEFAULT_FRAME_STYLE
+        wx.Frame.__init__(self, None, -1, "")
         self.text_ctrl_output = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE|wx.TE_READONLY)
         
         # Menu Bar
@@ -300,6 +301,7 @@ class TerminalFrame(wx.Frame):
         if self.settings.unprintable:
             text = ''.join([(c >= ' ') and c or '<%d>' % ord(c)  for c in text])
         self.text_ctrl_output.AppendText(text)
+        self.__mDrawPanel.SetX()
 
     def ComPortThread(self):
         """Thread that handles the incomming traffic. Does the basic input

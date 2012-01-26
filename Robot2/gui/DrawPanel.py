@@ -19,9 +19,11 @@ class DrawPanel(wx.Panel):
         #Position of the robot
         self.__mX = 0
         self.__mY = 0
-        
+        self.__mGyro = 0
+        self.__mAccelero = 0
+        self.__mText = ""
         wx.EVT_PAINT(self, self.OnPaint)
-
+        
 
     def OnPaint(self, event):
         """the paint event, what we paint when refresh"""
@@ -30,6 +32,7 @@ class DrawPanel(wx.Panel):
         inDc.BeginDrawing()
         self.DrawBotom(inDc)
         self.DrawRobot(inDc)
+        self.DrawTest(inDc)
         inDc.EndDrawing()
         
         
@@ -49,7 +52,10 @@ class DrawPanel(wx.Panel):
 
     def GetY(self):
         return self.__mY
-
+    
+    def DrawTest(self, inDc):
+        inDc.DrawText(self.__mText,10,10)
+        
     def SetX(self, value):
         self.__mX = value
         self.Refresh()
